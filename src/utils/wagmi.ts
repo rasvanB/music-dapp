@@ -3,7 +3,7 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { Connector } from "wagmi";
 
-type connectors = "metamask" | "coinbase" | "walletconnect";
+export type connectors = "metamask" | "coinbase" | "walletconnect";
 
 export const getConnector = (connectorName: connectors): Connector => {
   switch (connectorName) {
