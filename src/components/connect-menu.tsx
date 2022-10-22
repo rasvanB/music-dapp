@@ -18,7 +18,7 @@ const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
       : "";
   return (
     <div
-      className="mt-3 flex cursor-pointer items-center"
+      className="mt-1 flex cursor-pointer items-center rounded-md p-2 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
       onClick={(event) => {
         connect();
         if (onClick) onClick(event);
@@ -30,7 +30,7 @@ const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
         width="35px"
         height="35px"
       ></Image>
-      <div className="pl-3 font-semibold tracking-wider text-gray-200">
+      <div className="pl-3 font-medium tracking-wider text-gray-300">
         {connectorName}
       </div>
     </div>
