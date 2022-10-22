@@ -10,19 +10,19 @@ const Home: NextPage = () => {
   const { data: ensName } = useEnsName({ address });
 
   return (
-    <div className="relative h-[100vh] bg-slate-900 font-roboto text-white ">
+    <div className="relative flex h-[100vh] items-center justify-center bg-slate-900 font-roboto text-white ">
       {isConnected ? (
         <div>Connected to {ensName ?? address}</div>
       ) : (
         <button
           onClick={() => setModalOpen(true)}
-          className="rounded-md bg-purple-600 p-2 px-4 font-bold text-white"
+          className="h-fit rounded-md bg-purple-600 p-2 px-4 font-bold text-white"
         >
           Connect Wallet
         </button>
       )}
       {isModalOpen && (
-        <Modal setModalOpen={setModalOpen} title="Connect a Wallet">
+        <Modal setModalOpen={setModalOpen} title="Connect with Wallet">
           <ConnectMenu closeModal={() => setModalOpen(false)} />
         </Modal>
       )}

@@ -12,6 +12,7 @@ const { provider, webSocketProvider } = configureChains(
 const client = createClient({
   provider,
   webSocketProvider,
+  autoConnect: false,
 });
 
 const MyApp: AppType = ({ Component, pageProps }) => {
