@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import { useAccount, useConnect, useEnsName } from "wagmi";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { getConnector } from "../utils/wagmi";
 
 const Home: NextPage = () => {
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const { connect } = useConnect({
-    connector: new MetaMaskConnector(),
+    connector: getConnector("walletconnect"),
   });
 
   if (isConnected) return <div>Connected to {ensName ?? address}</div>;
