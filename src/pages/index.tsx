@@ -1,16 +1,30 @@
 import type { NextPage } from "next";
-import { useAccount, useConnect, useEnsName } from "wagmi";
-import { getConnector } from "../utils/wagmi";
+import { useState } from "react";
+import { useAccount, useEnsName } from "wagmi";
+import ConnectMenu from "../components/connect-menu";
+import Modal from "../components/modal";
 
 const Home: NextPage = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
-  const { connect } = useConnect({
-    connector: getConnector("walletconnect"),
-  });
 
   if (isConnected) return <div>Connected to {ensName ?? address}</div>;
-  return <button onClick={() => connect()}>Connect Wallet</button>;
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setModalOpen(true)}
+        className="rounded-md bg-purple-600 p-2 px-4 font-bold text-white"
+      >
+        Connect Wallet
+      </button>
+      {isModalOpen && (
+        <Modal setModalOpen={setModalOpen}>
+          <ConnectMenu />
+        </Modal>
+      )}
+    </div>
+  );
 };
 
 export default Home;
