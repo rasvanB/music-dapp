@@ -8,14 +8,20 @@ type MenuOptionProps = {
 
 const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
   const { connect } = useConnect({ connector: getConnector(text) });
-  const connectorName =
-    text === "metamask"
-      ? "MetaMask"
-      : text === "coinbase"
-      ? "Coinbase Wallet"
-      : text === "walletconnect"
-      ? "WalletConnect"
-      : "";
+
+  let connectorName = "";
+  switch (text) {
+    case "metamask":
+      connectorName = "MetaMask";
+      break;
+    case "coinbase":
+      connectorName = "Coinbase Wallet";
+      break;
+    case "walletconnect":
+      connectorName = "WalletConnect";
+      break;
+  }
+
   return (
     <div
       className="mt-1 flex cursor-pointer items-center rounded-md p-2 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
