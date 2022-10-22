@@ -4,15 +4,25 @@ import { Icon } from "@iconify/react";
 type ModalProps = {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   children: React.ReactNode;
+  title?: string;
 };
 
-const Modal = ({ setModalOpen, children }: ModalProps) => {
+const Modal = ({ setModalOpen, children, title }: ModalProps) => {
   return (
-    <div className="fixed top-0 flex h-[100vh] w-[100vw] flex-col">
-      <div className="cursor-pointer p-2" onClick={() => setModalOpen(false)}>
-        <Icon icon={"bi:x"}></Icon>
+    <div className="fixed top-0 flex h-[100vh] w-[100vw] items-center justify-center">
+      <div className="relative h-fit w-fit rounded-lg bg-[#1A1B1F] p-5 pt-10 outline outline-1 outline-zinc-800">
+        <h1 className="text-lg font-semibold text-gray-300">{title}</h1>
+        <div
+          className="absolute top-2 right-3 w-fit cursor-pointer rounded-full bg-[#2c2d31]"
+          onClick={() => setModalOpen(false)}
+        >
+          <Icon
+            icon={"heroicons-solid:x"}
+            className="p-1.5 text-3xl text-gray-300"
+          ></Icon>
+        </div>
+        {children}
       </div>
-      {children}
     </div>
   );
 };
