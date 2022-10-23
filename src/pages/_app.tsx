@@ -1,13 +1,13 @@
 import "../styles/globals.css";
 import type { AppType } from "next/dist/shared/lib/utils";
-import { configureChains, chain } from "wagmi";
+import { configureChains } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { WagmiConfig, createClient } from "wagmi";
+import { defaultChains } from "wagmi";
 
-const { provider, webSocketProvider } = configureChains(
-  [chain.mainnet],
-  [publicProvider()]
-);
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+]);
 
 const client = createClient({
   provider,

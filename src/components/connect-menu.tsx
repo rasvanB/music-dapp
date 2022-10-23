@@ -35,7 +35,7 @@ const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
         alt="wallet logo"
         width="35px"
         height="35px"
-      ></Image>
+      />
       <div className="pl-3 font-medium tracking-wider text-gray-300">
         {connectorName}
       </div>
