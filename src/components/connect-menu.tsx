@@ -45,15 +45,14 @@ const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
 
 type ConnectMenuProps = {
   closeModal: () => void;
+  options: connectors[];
 };
 
-const ConnectMenu = ({ closeModal }: ConnectMenuProps) => {
+const ConnectMenu = ({ closeModal, options }: ConnectMenuProps) => {
   console.log();
-
-  const connectOptions = ["metamask", "coinbase", "walletconnect"] as const;
   return (
     <div>
-      {connectOptions.map((option) => (
+      {options.map((option) => (
         <ConnectMenuOption key={option} text={option} onClick={closeModal} />
       ))}
     </div>

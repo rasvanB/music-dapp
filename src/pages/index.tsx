@@ -1,12 +1,18 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import { useAccount, useEnsName } from "wagmi";
+// import { useEnsAvatar } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
+import { connectors } from "../utils/wagmi";
+
+const connectOptions: connectors[] = ["metamask", "coinbase", "walletconnect"];
 
 const Home: NextPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { address, isConnected } = useAccount();
+  // TODO: SET UP AVATARS
+  // const { data: ensAvatar } = useEnsAvatar({ addressOrName: address });
   const { data: ensName } = useEnsName({ address });
 
   return (
@@ -23,7 +29,10 @@ const Home: NextPage = () => {
       )}
       {isModalOpen && (
         <Modal setModalOpen={setModalOpen} title="Connect with Wallet">
-          <ConnectMenu closeModal={() => setModalOpen(false)} />
+          <ConnectMenu
+            options={connectOptions}
+            closeModal={() => setModalOpen(false)}
+          />
         </Modal>
       )}
     </div>
