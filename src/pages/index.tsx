@@ -4,9 +4,22 @@ import { useAccount, useEnsName } from "wagmi";
 // import { useEnsAvatar } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
-import { connectors } from "../utils/wagmi";
+import { ConnectorType } from "../utils/wagmi";
 
-const connectOptions: connectors[] = ["metamask", "coinbase", "walletconnect"];
+const connectOptions: ConnectorType[] = [
+  {
+    name: "metamask",
+    label: "MetaMask",
+  },
+  {
+    name: "coinbase",
+    label: "Coinbase Wallet",
+  },
+  {
+    name: "walletconnect",
+    label: "WalletConnect",
+  },
+];
 
 const Home: NextPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -22,7 +35,7 @@ const Home: NextPage = () => {
       ) : (
         <button
           onClick={() => setModalOpen(true)}
-          className="h-fit rounded-md bg-purple-600 p-2 px-4 font-bold text-white"
+          className="h-fit select-none rounded-md bg-purple-600 p-2 px-4 font-bold text-white"
         >
           Connect Wallet
         </button>

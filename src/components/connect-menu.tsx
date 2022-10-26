@@ -1,27 +1,13 @@
 import Image from "next/image";
 import { useConnect } from "wagmi";
-import { connectors, getConnector } from "../utils/wagmi";
+import { ConnectorType, getConnector } from "../utils/wagmi";
 
 type MenuOptionProps = {
-  text: connectors;
+  connector: ConnectorType;
 } & React.BaseHTMLAttributes<HTMLDivElement>;
 
-const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
-  const { connect } = useConnect({ connector: getConnector(text) });
-
-  let connectorName = "";
-  switch (text) {
-    case "metamask":
-      connectorName = "MetaMask";
-      break;
-    case "coinbase":
-      connectorName = "Coinbase Wallet";
-      break;
-    case "walletconnect":
-      connectorName = "WalletConnect";
-      break;
-  }
-
+const ConnectMenuOption = ({ connector, onClick }: MenuOptionProps) => {
+  const { connect } = useConnect({ connector: getConnector(connector) });
   return (
     <div
       className="mt-1 flex cursor-pointer items-center rounded-md p-2 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
@@ -31,13 +17,13 @@ const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
       }}
     >
       <Image
-        src={`/${text}.png`}
+        src={`/${connector.name}.png`}
         alt="wallet logo"
         width="35px"
         height="35px"
       />
       <div className="pl-3 font-medium tracking-wider text-gray-300">
-        {connectorName}
+        {connector.label}
       </div>
     </div>
   );
@@ -45,15 +31,18 @@ const ConnectMenuOption = ({ text, onClick }: MenuOptionProps) => {
 
 type ConnectMenuProps = {
   closeModal: () => void;
-  options: connectors[];
+  options: ConnectorType[];
 };
 
 const ConnectMenu = ({ closeModal, options }: ConnectMenuProps) => {
-  console.log();
   return (
     <div>
       {options.map((option) => (
-        <ConnectMenuOption key={option} text={option} onClick={closeModal} />
+        <ConnectMenuOption
+          key={option.name}
+          connector={option}
+          onClick={closeModal}
+        />
       ))}
     </div>
   );
