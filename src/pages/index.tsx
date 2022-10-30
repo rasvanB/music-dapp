@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       ) : (
         <button
           onClick={() => setModalOpen(true)}
-          className="h-fit select-none rounded-md bg-purple p-2 px-4 font-bold"
+          className="h-fit select-none rounded-full bg-purple p-2 px-6 font-bold"
         >
           Connect Wallet
         </button>
