@@ -5,6 +5,7 @@ import { useAccount, useEnsName } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
 import { ConnectorType } from "../utils/wagmi";
+import button from "../styles/buttons";
 
 const connectOptions: ConnectorType[] = [
   {
@@ -35,7 +36,7 @@ const Home: NextPage = () => {
       ) : (
         <button
           onClick={() => setModalOpen(true)}
-          className="h-fit select-none rounded-full bg-purple p-2 px-6 font-bold"
+          className={button({ intent: "primary" })}
         >
           Connect Wallet
         </button>
