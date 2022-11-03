@@ -6,16 +6,34 @@ import { WagmiConfig, createClient } from "wagmi";
 import { defaultChains } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { env } from "../env/client.mjs";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
-const { provider, webSocketProvider } = configureChains(defaultChains, [
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
   publicProvider(),
   alchemyProvider({ apiKey: env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
 ]);
 
 const client = createClient({
+  autoConnect: false,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: "wagmi",
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+      },
+    }),
+  ],
   provider,
   webSocketProvider,
-  autoConnect: false,
 });
 
 const MyApp: AppType = ({ Component, pageProps }) => {
