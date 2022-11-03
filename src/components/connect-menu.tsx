@@ -1,31 +1,40 @@
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { Connector, useConnect } from "wagmi";
 
 type MenuOptionProps = {
   connector: Connector;
-} & React.BaseHTMLAttributes<HTMLDivElement>;
+  closeModal: () => void;
+};
 
-const ConnectMenuOption = ({ connector, onClick }: MenuOptionProps) => {
-  const { connect, connectors } = useConnect();
-  console.log(connectors);
+const ConnectMenuOption = ({ connector, closeModal }: MenuOptionProps) => {
+  const { connect, pendingConnector, isLoading } = useConnect({
+    onSettled: closeModal,
+  });
 
   return (
     <div
       className="mt-1 flex cursor-pointer items-center rounded-md p-2 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
-      onClick={(event) => {
-        // TODO: DISABLE IF CONNECTING
-        connect({ connector });
-        if (onClick) onClick(event);
+      onClick={() => {
+        if (!isLoading && connector.id !== pendingConnector?.id)
+          connect({ connector });
       }}
     >
       <Image
         src={`/${connector.id}.png`}
         alt="wallet logo"
-        width="35px"
-        height="35px"
+        width="40px"
+        height="40px"
       />
-      <div className="pl-3 font-medium tracking-wider text-gray-300">
-        {connector.name}
+      <div className="text-md w-full pl-3 font-medium tracking-wider text-gray-300">
+        {isLoading && connector.id === pendingConnector?.id ? (
+          <span className="flex w-full items-center justify-center gap-3 text-lg">
+            {"Connecting..."}
+            <Icon icon="eos-icons:loading" className="text-3xl"></Icon>
+          </span>
+        ) : (
+          connector.name
+        )}
       </div>
     </div>
   );
@@ -43,7 +52,7 @@ const ConnectMenu = ({ closeModal, options }: ConnectMenuProps) => {
         <ConnectMenuOption
           key={option.id}
           connector={option}
-          onClick={closeModal}
+          closeModal={closeModal}
         />
       ))}
     </div>
