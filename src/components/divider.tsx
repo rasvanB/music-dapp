@@ -1,8 +1,13 @@
-const Divider = ({ color }: { color: string }) => {
+type DividerProps = {
+  color: string;
+  width: `${number}px`;
+};
+
+const Divider = ({ color, width }: DividerProps) => {
   return (
     <div
       className="my-2 w-full rounded-full"
-      style={{ borderBottom: "1px solid " + color }}
+      style={{ borderBottom: width + " solid " + color }}
     ></div>
   );
 };
