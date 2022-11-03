@@ -11,7 +11,7 @@ type ModalProps = {
 const Modal = ({ setModalOpen, children, title }: ModalProps) => {
   return (
     <div className="fixed top-0 flex h-[100vh] w-[100vw] items-center justify-center bg-black bg-opacity-30">
-      <div className="relative h-fit w-fit rounded-2xl bg-[#1A1B1F] p-5 pt-7 outline outline-1 outline-zinc-800">
+      <div className="relative h-fit w-fit min-w-[220px] rounded-2xl bg-[#1A1B1F] p-5 pt-7 outline outline-1 outline-zinc-800">
         <h1 className="mt-3 mb-1 text-lg font-semibold text-gray-200">
           {title}
         </h1>
