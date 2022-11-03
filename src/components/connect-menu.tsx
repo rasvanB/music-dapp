@@ -1,29 +1,31 @@
 import Image from "next/image";
-import { useConnect } from "wagmi";
-import { ConnectorType, getConnector } from "../utils/wagmi";
+import { Connector, useConnect } from "wagmi";
 
 type MenuOptionProps = {
-  connector: ConnectorType;
+  connector: Connector;
 } & React.BaseHTMLAttributes<HTMLDivElement>;
 
 const ConnectMenuOption = ({ connector, onClick }: MenuOptionProps) => {
-  const { connect } = useConnect({ connector: getConnector(connector) });
+  const { connect, connectors } = useConnect();
+  console.log(connectors);
+
   return (
     <div
       className="mt-1 flex cursor-pointer items-center rounded-md p-2 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
       onClick={(event) => {
-        connect();
+        // TODO: DISABLE IF CONNECTING
+        connect({ connector });
         if (onClick) onClick(event);
       }}
     >
       <Image
-        src={`/${connector.name}.png`}
+        src={`/${connector.id}.png`}
         alt="wallet logo"
         width="35px"
         height="35px"
       />
       <div className="pl-3 font-medium tracking-wider text-gray-300">
-        {connector.label}
+        {connector.name}
       </div>
     </div>
   );
@@ -31,7 +33,7 @@ const ConnectMenuOption = ({ connector, onClick }: MenuOptionProps) => {
 
 type ConnectMenuProps = {
   closeModal: () => void;
-  options: ConnectorType[];
+  options: Connector[];
 };
 
 const ConnectMenu = ({ closeModal, options }: ConnectMenuProps) => {
@@ -39,7 +41,7 @@ const ConnectMenu = ({ closeModal, options }: ConnectMenuProps) => {
     <div>
       {options.map((option) => (
         <ConnectMenuOption
-          key={option.name}
+          key={option.id}
           connector={option}
           onClick={closeModal}
         />

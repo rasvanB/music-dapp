@@ -7,7 +7,7 @@ const Divider = ({ color, width }: DividerProps) => {
   return (
     <div
       className="my-2 w-full rounded-full"
-      style={{ borderBottom: width + " solid " + color }}
+      style={{ borderBottom: `${width} solid ${color}` }}
     ></div>
   );
 };

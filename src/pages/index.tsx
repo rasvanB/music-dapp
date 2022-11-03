@@ -1,30 +1,16 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-import { useAccount, useEnsName } from "wagmi";
+import { useAccount, useConnect, useEnsName } from "wagmi";
 // import { useEnsAvatar } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
-import { ConnectorType } from "../utils/wagmi";
 import button from "../styles/buttons";
-
-const connectOptions: ConnectorType[] = [
-  {
-    name: "metamask",
-    label: "MetaMask",
-  },
-  {
-    name: "coinbase",
-    label: "Coinbase Wallet",
-  },
-  {
-    name: "walletconnect",
-    label: "WalletConnect",
-  },
-];
 
 const Home: NextPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { address, isConnected } = useAccount();
+  const { connectors } = useConnect();
+
   // TODO: SET UP AVATARS
   // const { data: ensAvatar } = useEnsAvatar({ addressOrName: address });
   const { data: ensName } = useEnsName({ address });
@@ -44,7 +30,7 @@ const Home: NextPage = () => {
       {isModalOpen && (
         <Modal setModalOpen={setModalOpen} title="Connect with Wallet">
           <ConnectMenu
-            options={connectOptions}
+            options={connectors}
             closeModal={() => setModalOpen(false)}
           />
         </Modal>
