@@ -14,10 +14,11 @@ const ConnectMenuOption = ({ connector, closeModal }: MenuOptionProps) => {
 
   return (
     <div
-      className="mt-1 flex cursor-pointer items-center rounded-md p-2 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
+      className="mt-1 flex cursor-pointer items-center rounded-md p-1.5 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
       onClick={() => {
-        if (!isLoading && connector.id !== pendingConnector?.id)
+        if (!isLoading && pendingConnector === undefined) {
           connect({ connector });
+        }
       }}
     >
       <Image
@@ -26,11 +27,11 @@ const ConnectMenuOption = ({ connector, closeModal }: MenuOptionProps) => {
         width="40px"
         height="40px"
       />
-      <div className="text-md w-full pl-3 font-medium tracking-wider text-gray-300">
+      <div className="w-full pl-3 text-sm font-medium tracking-wide text-gray-300">
         {isLoading && connector.id === pendingConnector?.id ? (
-          <span className="flex w-full items-center justify-center gap-3 text-lg">
+          <span className="flex w-full items-center gap-3 text-sm">
             {"Connecting..."}
-            <Icon icon="eos-icons:loading" className="text-3xl"></Icon>
+            <Icon icon="eos-icons:loading" className="text-2xl"></Icon>
           </span>
         ) : (
           connector.name
