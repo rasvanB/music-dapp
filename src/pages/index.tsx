@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   const { data: ensName } = useEnsName({ address });
 
   return (
-    <div className="relative flex h-[100vh] items-center justify-center bg-dark font-roboto text-white ">
+    <div className="relative flex h-[100vh] items-center justify-center bg-dark font-inter text-white ">
       {isConnected ? (
         <div>Connected to {ensName ?? address}</div>
       ) : (
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
       {isModalOpen && (
         <Modal setModalOpen={setModalOpen} title="Connect with Wallet">
           <ConnectMenu
-            options={connectors}
+            connectors={connectors}
             closeModal={() => setModalOpen(false)}
           />
         </Modal>
