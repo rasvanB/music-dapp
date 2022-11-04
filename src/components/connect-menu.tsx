@@ -63,18 +63,20 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
 
   return (
     <div>
-      {connectors.map((connector) => (
-        <ConnectMenuOption
-          key={connector.id}
-          connector={connector}
-          isLoading={isLoading && connector.id === pendingConnector?.id}
-          onClick={() => {
-            if (!isLoading && connector.id !== pendingConnector?.id) {
-              connect({ connector });
-            }
-          }}
-        />
-      ))}
+      <div className={clsx(error.message && "mb-3")}>
+        {connectors.map((connector) => (
+          <ConnectMenuOption
+            key={connector.id}
+            connector={connector}
+            isLoading={isLoading && connector.id === pendingConnector?.id}
+            onClick={() => {
+              if (!isLoading && connector.id !== pendingConnector?.id) {
+                connect({ connector });
+              }
+            }}
+          />
+        ))}
+      </div>
       <Alert message={error.message} type={error.type} />
     </div>
   );
