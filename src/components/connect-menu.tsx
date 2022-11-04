@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
 import Image from "next/image";
 import { Connector, useConnect } from "wagmi";
 
@@ -14,7 +15,12 @@ const ConnectMenuOption = ({ connector, closeModal }: MenuOptionProps) => {
 
   return (
     <div
-      className="mt-1 flex cursor-pointer items-center rounded-md p-1.5 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]"
+      className={clsx(
+        "mt-1 flex items-center rounded-md p-1.5 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]",
+        isLoading && connector.id === pendingConnector?.id
+          ? "cursor-default"
+          : "cursor-pointer"
+      )}
       onClick={() => {
         if (!isLoading && pendingConnector === undefined) {
           connect({ connector });
