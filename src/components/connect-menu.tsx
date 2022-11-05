@@ -24,7 +24,7 @@ const ConnectMenuOption = ({
       onClick={onClick}
     >
       <Image
-        src={`/${connector.id}.png`}
+        src={`https://res.cloudinary.com/dm6lj1rcn/image/upload/v1667672062/${connector.id.toLowerCase()}.png`}
         alt="wallet logo"
         width="40px"
         height="40px"
@@ -50,8 +50,6 @@ type ConnectMenuProps = {
 
 const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
   const [error, setError] = useState<AlertInfo>({ message: "", type: "error" });
-
-  console.log(error);
 
   const { connect, pendingConnector, isLoading } = useConnect({
     onSuccess: closeModal,
