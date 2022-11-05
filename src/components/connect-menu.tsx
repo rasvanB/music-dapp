@@ -68,7 +68,7 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
             connector={connector}
             isLoading={isLoading && connector.id === pendingConnector?.id}
             onClick={() => {
-              if (!isLoading && connector.id !== pendingConnector?.id) {
+              if (!isLoading) {
                 connect({ connector });
               }
             }}
