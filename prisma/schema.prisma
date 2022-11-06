@@ -8,6 +8,6 @@ datasource db {
 }
 
 model User {
-  address String @id @unique
+  address String @id
   nonce String
 }
