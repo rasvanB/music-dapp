@@ -2,8 +2,9 @@ import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
-import { Connector, useConnect } from "wagmi";
-import Alert, { AlertInfo } from "./alert";
+import { Connector, useConnect, useSignMessage } from "wagmi";
+import { createUser, getUser } from "../services/users";
+import Alert, { AlertInfo, AlertType } from "./alert";
 
 type MenuOptionProps = {
   connector: Connector;
@@ -49,19 +50,52 @@ type ConnectMenuProps = {
 };
 
 const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
-  const [error, setError] = useState<AlertInfo>({ message: "", type: "error" });
+  const [alert, setAlert] = useState<AlertInfo>({ message: "", type: "error" });
+
+  const showAlert = (message: string, type: AlertType) => {
+    setAlert({
+      message,
+      type,
+    });
+    setTimeout(() => {
+      setAlert({ message: "", type: "error" });
+    }, 5000);
+  };
+
+  const { signMessage } = useSignMessage({
+    onSuccess(data) {
+      // Verify signature when sign message succeeds
+      console.log(data);
+      closeModal();
+    },
+    onError(error) {
+      showAlert("Message signing failed", "error");
+      console.error("Singing", error);
+    },
+  });
 
   const { connect, pendingConnector, isLoading } = useConnect({
-    onSuccess: closeModal,
+    onSuccess: async (data) => {
+      showAlert("Prompting message sign", "info");
+      try {
+        const user = await getUser(data.account);
+        if (user) signMessage({ message: user.nonce });
+      } catch (error) {
+        const createdUser = await createUser({
+          address: data.account,
+          nonce: crypto.randomUUID(),
+        });
+        signMessage({ message: createdUser.nonce });
+      }
+    },
     onError(error) {
-      setError({ message: error.message, type: "error" });
-      setTimeout(() => setError({ message: "", type: "error" }), 2500);
+      showAlert(error.message, "error");
     },
   });
 
   return (
     <div>
-      <div className={clsx(error.message && "mb-3")}>
+      <div className={clsx(alert.message && "mb-3")}>
         {connectors.map((connector) => (
           <ConnectMenuOption
             key={connector.id}
@@ -75,7 +109,7 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
           />
         ))}
       </div>
-      <Alert message={error.message} type={error.type} />
+      <Alert message={alert.message} type={alert.type} />
     </div>
   );
 };
