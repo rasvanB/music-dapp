@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Connector, useConnect, useSignMessage } from "wagmi";
-import { createUser, getUser } from "../services/users";
+import { authUser, createUser, getUser } from "../services/users";
 import Alert, { AlertInfo, AlertType } from "./alert";
 
 type MenuOptionProps = {
@@ -51,6 +51,7 @@ type ConnectMenuProps = {
 
 const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
   const [alert, setAlert] = useState<AlertInfo>({ message: "", type: "error" });
+  const address = useRef<string>("");
 
   const showAlert = (message: string, type: AlertType) => {
     setAlert({
@@ -63,9 +64,12 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
   };
 
   const { signMessage } = useSignMessage({
-    onSuccess(data) {
+    onSuccess: async (data) => {
       // Verify signature when sign message succeeds
-      console.log(data);
+      if (address.current) {
+        const authentificatedUser = await authUser(address.current, data);
+        console.log(authentificatedUser);
+      }
       closeModal();
     },
     onError(error) {
@@ -79,12 +83,17 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
       showAlert("Prompting message sign", "info");
       try {
         const user = await getUser(data.account);
-        if (user) signMessage({ message: user.nonce });
+
+        if (user) {
+          address.current = user.address;
+          signMessage({ message: user.nonce });
+        }
       } catch (error) {
         const createdUser = await createUser({
           address: data.account,
           nonce: crypto.randomUUID(),
         });
+        address.current = createdUser.address;
         signMessage({ message: createdUser.nonce });
       }
     },
