@@ -21,3 +21,17 @@ export const createUser = async (user: User): Promise<User> => {
     .then((res) => res.data);
   return userCreation.parse(createdUser);
 };
+
+export const authUser = async (
+  address: string,
+  signature: string
+): Promise<User | undefined> => {
+  try {
+    const authentificatedUser = await axios
+      .post("/api/auth", { address, signature })
+      .then((res) => res.data);
+    return authentificatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
