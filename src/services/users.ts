@@ -22,10 +22,15 @@ export const createUser = async (user: User): Promise<User> => {
   return userCreation.parse(createdUser);
 };
 
+type AuthData = {
+  token: string;
+  user: User;
+};
+
 export const authUser = async (
   address: string,
   signature: string
-): Promise<User | undefined> => {
+): Promise<AuthData | undefined> => {
   try {
     const authentificatedUser = await axios
       .post("/api/auth", { address, signature })
