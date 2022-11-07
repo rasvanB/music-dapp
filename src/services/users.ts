@@ -2,7 +2,14 @@ import { User } from "@prisma/client";
 import axios from "axios";
 import { userCreation } from "../models/user";
 
-export const getUser = async (address: string): Promise<User | undefined> => {
+type BasicUser = {
+  address: string;
+  nonce: string;
+};
+
+export const getUserBasicData = async (
+  address: string
+): Promise<BasicUser | undefined> => {
   try {
     const response = await axios
       .get("/api/users/" + address)

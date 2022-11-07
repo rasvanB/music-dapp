@@ -12,7 +12,7 @@ export default async function handle(
   });
 
   if (user) {
-    res.status(200).json(user);
+    res.status(200).json({ address: user.address, nonce: user.nonce });
   } else {
     res.status(404).json({ message: "User not found" });
   }

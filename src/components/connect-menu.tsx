@@ -3,7 +3,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { Connector, useConnect, useSignMessage } from "wagmi";
-import { authUser, createUser, getUser } from "../services/users";
+import { authUser, createUser, getUserBasicData } from "../services/users";
 import Alert, { AlertInfo, AlertType } from "./alert";
 
 type MenuOptionProps = {
@@ -84,7 +84,7 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
     onSuccess: async (data) => {
       showAlert("Prompting message sign", "info");
       try {
-        const user = await getUser(data.account);
+        const user = await getUserBasicData(data.account);
 
         if (user) {
           address.current = user.address;
