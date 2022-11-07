@@ -4,6 +4,8 @@ import { ZodError } from "zod";
 import { userAuthentification } from "../../../models/user";
 import { prisma } from "../../../server/db/client";
 import { randomUUID } from "crypto";
+import { sign } from "jsonwebtoken";
+import { env } from "../../../env/server.mjs";
 
 export default async function handle(
   req: NextApiRequest,
@@ -29,7 +31,8 @@ export default async function handle(
                 nonce: newNonce,
               },
             });
-            return res.status(201).json(updatedUser);
+            const token = sign({ address }, env.SECRET, { algorithm: "HS256" });
+            return res.status(201).json({ user: updatedUser, token });
           } else {
             return res.status(401).json({
               error: "Invalid signature",
