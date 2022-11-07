@@ -50,8 +50,8 @@ type ConnectMenuProps = {
 };
 
 const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
-  const [alert, setAlert] = useState<AlertInfo>({ message: "", type: "error" });
   const address = useRef<string>("");
+  const [alert, setAlert] = useState<AlertInfo>({ message: "", type: "error" });
 
   const showAlert = (message: string, type: AlertType) => {
     setAlert({
@@ -67,8 +67,10 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
     onSuccess: async (data) => {
       // Verify signature when sign message succeeds
       if (address.current) {
-        const authentificatedUser = await authUser(address.current, data);
-        console.log(authentificatedUser);
+        const authData = await authUser(address.current, data);
+        if (authData) {
+          localStorage.setItem("auth", JSON.stringify(authData.token));
+        }
       }
       closeModal();
     },
