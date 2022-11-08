@@ -26,7 +26,7 @@ const ConnectMenuOption = ({
   return (
     <div
       className={clsx(
-        "mt-1 flex items-center rounded-md p-1.5 hover:bg-[#222429] hover:outline hover:outline-1 hover:outline-[#2f3238]",
+        "mt-1 flex items-center rounded-md p-1.5 outline outline-1 outline-transparent duration-100 hover:bg-[#222429] hover:outline-[#2f3238]",
         isLoading ? "cursor-default" : "cursor-pointer"
       )}
       onClick={onClick}

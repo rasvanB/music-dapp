@@ -17,7 +17,7 @@ const Modal = ({ setModalOpen, children, title }: ModalProps) => {
         </h1>
         <Divider color="#2d2e33" width="1px" />
         <div
-          className="absolute top-2 right-2 w-fit cursor-pointer rounded-full bg-[#2c2d31] p-1.5 duration-100 hover:scale-110"
+          className="absolute top-2 right-2 w-fit cursor-pointer rounded-full bg-[#2c2d31] p-1.5 duration-100 hover:scale-105"
           onClick={() => setModalOpen(false)}
         >
           <Icon
