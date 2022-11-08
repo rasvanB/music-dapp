@@ -1,9 +1,16 @@
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { Connector, useConnect, useSignMessage } from "wagmi";
-import { authUser, createUser, getUserBasicData } from "../services/users";
+import {
+  authUser,
+  createUser,
+  getUserBasicData,
+  setBearerToken,
+} from "../services/users";
+import { userAtom } from "../utils/store";
 import Alert, { AlertInfo, AlertType } from "./alert";
 
 type MenuOptionProps = {
@@ -52,6 +59,7 @@ type ConnectMenuProps = {
 const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
   const address = useRef<string>("");
   const [alert, setAlert] = useState<AlertInfo>({ message: "", type: "error" });
+  const [, setUser] = useAtom(userAtom);
 
   const showAlert = (message: string, type: AlertType) => {
     setAlert({
@@ -69,7 +77,9 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
       if (address.current) {
         const authData = await authUser(address.current, data);
         if (authData) {
-          localStorage.setItem("auth", JSON.stringify(authData.token));
+          localStorage.setItem("auth:user", JSON.stringify(authData.token));
+          setBearerToken(authData.token);
+          setUser(authData.user);
         }
       }
       closeModal();
