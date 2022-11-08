@@ -31,7 +31,10 @@ export default async function handle(
                 nonce: newNonce,
               },
             });
-            const token = sign({ address }, env.SECRET, { algorithm: "HS256" });
+            const token = sign({ address }, env.SECRET, {
+              algorithm: "HS256",
+              expiresIn: "24h",
+            });
             return res.status(201).json({ user: updatedUser, token });
           } else {
             return res.status(401).json({

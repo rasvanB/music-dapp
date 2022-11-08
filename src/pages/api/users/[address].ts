@@ -9,7 +9,6 @@ export default async function handle(
   if (req.method === "GET") {
     const token = getBearerToken(req);
     const address = req.query.address as string;
-    console.log("\n\n\n\nTOKEN", token, "\n\n\n\n\n");
 
     const user = await prisma.user.findUnique({
       where: { address },
