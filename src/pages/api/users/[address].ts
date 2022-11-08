@@ -1,25 +1,33 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../server/db/client";
-import { getBearerToken } from "../../../utils/token";
+import { getBearerToken, isJwtValid } from "../../../utils/token";
 
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const token = getBearerToken(req);
-  const address = req.query.address as string;
+  if (req.method === "GET") {
+    const token = getBearerToken(req);
+    const address = req.query.address as string;
+    console.log("\n\n\n\nTOKEN", token, "\n\n\n\n\n");
 
-  const user = await prisma.user.findUnique({
-    where: { address },
-  });
+    const user = await prisma.user.findUnique({
+      where: { address },
+    });
 
-  if (user) {
-    if (!token) {
-      res.status(200).json({ address: user.address, nonce: user.nonce });
+    if (user) {
+      if (!token) {
+        return res
+          .status(200)
+          .json({ address: user.address, nonce: user.nonce });
+      } else {
+        if (isJwtValid(token)) return res.status(200).json(user);
+        return res.status(401).json({ error: "Invalid token" });
+      }
     } else {
-      res.status(200).json(user);
+      return res.status(404).json({ message: "User not found" });
     }
   } else {
-    res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ error: "method not supported" });
   }
 }
