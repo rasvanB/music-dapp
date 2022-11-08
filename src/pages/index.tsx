@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import { useAccount, useConnect, useEnsName } from "wagmi";
-// import { useEnsAvatar } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
 import button from "../styles/buttons";
@@ -11,8 +10,6 @@ const Home: NextPage = () => {
   const { address, isConnected } = useAccount();
   const { connectors } = useConnect();
 
-  // TODO: SET UP AVATARS
-  // const { data: ensAvatar } = useEnsAvatar({ addressOrName: address });
   const { data: ensName } = useEnsName({ address });
 
   return (
