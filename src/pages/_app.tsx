@@ -58,7 +58,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
             decodedData.publicAddress &&
             Date.now() < decodedData.exp * 1000
           ) {
-            getUserData(decodedData.publicAddress).then((user) => {
+            getUserData(decodedData.publicAddress as string).then((user) => {
               if (user) setUser(user);
             });
           } else window.localStorage.removeItem("auth:user");

@@ -5,17 +5,27 @@ import { useConnect } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
 import button from "../styles/buttons";
+import Image from "next/image";
+import { generateIcon } from "../utils/identicon";
 import { userAtom } from "../utils/store";
 
 const Home: NextPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { connectors } = useConnect();
   const [user] = useAtom(userAtom);
-
+  if (user) console.log(generateIcon(user.address));
   return (
     <div className="relative flex h-[100vh] items-center justify-center bg-dark font-inter text-white ">
       {user ? (
-        <div>Connected to {user.address} YO</div>
+        <div>
+          Connected to {user.address}
+          <Image
+            src={"data:image/png;base64," + generateIcon(user.address)}
+            width={50}
+            height={50}
+            alt="profile_picture"
+          ></Image>
+        </div>
       ) : (
         <button
           onClick={() => setModalOpen(true)}
