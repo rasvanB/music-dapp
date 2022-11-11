@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useConnect } from "wagmi";
 import ConnectMenu from "../components/connect-menu";
 import Modal from "../components/modal";
+import UserProfile from "../components/user-profile";
 import button from "../styles/buttons";
-import Image from "next/image";
-import { generateIcon } from "../utils/identicon";
 import { userAtom } from "../utils/store";
 
 const Home: NextPage = () => {
@@ -16,15 +15,7 @@ const Home: NextPage = () => {
   return (
     <div className="relative flex h-[100vh] items-center justify-center bg-dark font-inter text-white ">
       {user ? (
-        <div>
-          Connected to {user.address}
-          <Image
-            src={"data:image/svg+xml;base64," + generateIcon(user.address)}
-            width={50}
-            height={50}
-            alt="profile_picture"
-          ></Image>
-        </div>
+        <UserProfile />
       ) : (
         <button
           onClick={() => setModalOpen(true)}
