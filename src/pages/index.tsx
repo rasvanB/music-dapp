@@ -13,14 +13,13 @@ const Home: NextPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { connectors } = useConnect();
   const [user] = useAtom(userAtom);
-  if (user) console.log(generateIcon(user.address));
   return (
     <div className="relative flex h-[100vh] items-center justify-center bg-dark font-inter text-white ">
       {user ? (
         <div>
           Connected to {user.address}
           <Image
-            src={"data:image/png;base64," + generateIcon(user.address)}
+            src={"data:image/svg+xml;base64," + generateIcon(user.address)}
             width={50}
             height={50}
             alt="profile_picture"
