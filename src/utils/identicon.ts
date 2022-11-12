@@ -1,12 +1,6 @@
-import Identicon, { IdenticonOptions } from "identicon.js";
+import makeBlockie from "ethereum-blockies-base64";
 
-const IMAGE_OPTIONS: IdenticonOptions = {
-  background: [24, 25, 34, 255],
-  size: 128,
-  format: "svg",
-};
-
-export const generateIcon = (token: string) => {
-  const data = new Identicon(token, IMAGE_OPTIONS).toString();
+export const generateIcon = (hash: string) => {
+  const data = makeBlockie(hash);
   return data;
 };

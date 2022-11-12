@@ -11,7 +11,7 @@ const UserProfile = () => {
     <div className="flex items-center gap-3 rounded-full bg-[#1C1C1C] p-3 py-2 text-sm font-medium tracking-wider outline outline-1 outline-[#2c2c2c]">
       <div className="flex">
         <Image
-          src={"data:image/svg+xml;base64," + generateIcon(user?.address)}
+          src={generateIcon(user?.address)}
           width={25}
           height={25}
           className="rounded-full"
