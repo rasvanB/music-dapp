@@ -15,7 +15,7 @@ const Modal = ({ setModalOpen, children, title }: ModalProps) => {
         <div className="mt-3 mb-3 flex items-center px-4">
           <h1 className="text-md mr-7 font-semibold text-gray-200">{title}</h1>
           <div
-            className=" w-fit cursor-pointer rounded-lg p-1.5 duration-100 hover:scale-105 hover:bg-[#2c2d31]"
+            className="w-fit cursor-pointer rounded-lg p-1.5 duration-100 hover:scale-105 hover:bg-[#2c2d31]"
             onClick={() => setModalOpen(false)}
           >
             <Icon

@@ -4,6 +4,7 @@ import alert from "../styles/alerts";
 import { getIconFromAlertType } from "../utils/icons";
 
 export type AlertType = "success" | "info" | "warning" | "error";
+
 export type AlertInfo = {
   message: string;
   type: AlertType;

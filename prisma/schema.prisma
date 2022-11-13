@@ -8,8 +8,8 @@ datasource db {
 }
 
 model User {
-  username String?
-  avatar String?
   address String @unique
   nonce String
+  avatar String?
+  username String?
 }
