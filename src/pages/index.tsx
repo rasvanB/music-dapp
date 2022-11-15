@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const { connectors } = useConnect();
   const [user] = useAtom(userAtom);
   return (
-    <div className="relative flex h-[100vh] items-start justify-center bg-dark pt-2 font-inter text-white ">
+    <div className="relative flex h-[100vh] items-start justify-center bg-dark pt-2 font-inter text-white">
       {user ? (
         <UserProfile />
       ) : (

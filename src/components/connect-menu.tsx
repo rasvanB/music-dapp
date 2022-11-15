@@ -34,7 +34,6 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
 
   const { signMessage } = useSignMessage({
     onSuccess: async (data) => {
-      // Verify signature when sign message succeeds
       if (address.current) {
         const authData = await authUser(address.current, data);
         if (authData) {
