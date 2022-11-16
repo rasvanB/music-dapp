@@ -22,14 +22,14 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
   const [alert, setAlert] = useState<AlertInfo>({ message: "", type: "error" });
   const [, setUser] = useAtom(userAtom);
 
-  const showAlert = (message: string, type: AlertType) => {
+  const showAlert = (message: string, type: AlertType, timeout: number) => {
     setAlert({
       message,
       type,
     });
     setTimeout(() => {
       setAlert({ message: "", type: "error" });
-    }, 5000);
+    }, timeout);
   };
 
   const { signMessage } = useSignMessage({
@@ -45,14 +45,14 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
       closeModal();
     },
     onError(error) {
-      showAlert("Message signing failed", "error");
+      showAlert("Message signing failed", "error", 5000);
       console.error("Singing", error);
     },
   });
 
   const { connect, pendingConnector, isLoading } = useConnect({
     onSuccess: async (data) => {
-      showAlert("Prompting message sign", "info");
+      showAlert("Prompting message sign", "info", 5000);
       try {
         const user = await getUserBasicData(data.account);
 
@@ -70,7 +70,7 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
       }
     },
     onError(error) {
-      showAlert(error.message, "error");
+      showAlert(error.message, "error", 5000);
     },
   });
 
