@@ -11,7 +11,6 @@ export type AlertInfo = {
 };
 
 const Alert = ({ message, type }: AlertInfo) => {
-	
   return (
     <div className={clsx(message ? alert({ intent: type }) : "hidden")}>
       <Icon icon={getIconFromAlertType(type)} className="text-2xl" />
