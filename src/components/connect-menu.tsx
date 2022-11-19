@@ -55,7 +55,6 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
       showAlert("Prompting message sign", "info", 5000);
       try {
         const user = await getUserBasicData(data.account);
-
         if (user) {
           address.current = user.address;
           signMessage({ message: user.nonce });
