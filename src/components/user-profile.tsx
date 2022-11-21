@@ -8,7 +8,7 @@ const UserProfile = () => {
   const [user] = useAtom(userAtom);
   if (!user) return null;
   return (
-    <div className="flex items-center gap-3 rounded-full bg-[#1C1C1C] p-3 py-2 text-sm font-medium tracking-wider outline outline-1 outline-[#2c2c2c]">
+    <div className="flex w-fit items-center gap-3 rounded-full bg-[#1C1C1C] p-3 py-2 text-sm font-medium tracking-wider text-gray-100 outline outline-1 outline-[#2c2c2c]">
       <div className="flex">
         <Image
           src={generateIcon(user.address)}

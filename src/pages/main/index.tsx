@@ -1,7 +1,12 @@
 import { NextPage } from "next";
+import UserProfile from "../../components/user-profile";
 
 const Home: NextPage = () => {
-  return <div>MAIN APP</div>;
+  return (
+    <div>
+      <UserProfile />
+    </div>
+  );
 };
 
 export default Home;
