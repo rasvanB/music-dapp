@@ -41,11 +41,12 @@ export const getUserData = async (
   }
 };
 
-//TODO: THIS SHOULD CHECK FOR ERRORS
 export const createUser = async (user: User): Promise<User> => {
   const createdUser = await axios
     .post("/api/users/", user)
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => console.error(err));
+
   return userCreation.parse(createdUser);
 };
 
