@@ -41,13 +41,15 @@ export const getUserData = async (
   }
 };
 
-export const createUser = async (user: User): Promise<User> => {
-  const createdUser = await axios
-    .post("/api/users/", user)
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
-
-  return userCreation.parse(createdUser);
+export const createUser = async (user: User): Promise<User | undefined> => {
+  try {
+    const createdUser = await axios
+      .post("/api/users/", user)
+      .then((res) => res.data);
+    return userCreation.parse(createdUser);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const authUser = async (
