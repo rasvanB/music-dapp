@@ -25,9 +25,8 @@ export default async function handle(
           if (address === publicAddress) {
             const newNonce = randomUUID();
             const updatedUser = await prisma.user.update({
-              where: { address: publicAddress },
+              where: { address },
               data: {
-                address: publicAddress,
                 nonce: newNonce,
               },
             });

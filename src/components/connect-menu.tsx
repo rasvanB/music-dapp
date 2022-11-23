@@ -64,8 +64,10 @@ const ConnectMenu = ({ closeModal, connectors }: ConnectMenuProps) => {
           address: data.account,
           nonce: crypto.randomUUID(),
         });
-        address.current = createdUser.address;
-        signMessage({ message: createdUser.nonce });
+        if (createdUser) {
+          address.current = createdUser.address;
+          signMessage({ message: createdUser.nonce });
+        }
       }
     },
     onError(error) {
