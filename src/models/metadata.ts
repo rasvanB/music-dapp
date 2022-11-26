@@ -34,8 +34,8 @@ export const metadataObject = z.object({
         required_error: "Genre is required",
       })
       .nonempty(),
-    date: z.string({
-      required_error: "Date is required",
+    year: z.number({
+      required_error: "Year is required",
     }),
   }),
 });
