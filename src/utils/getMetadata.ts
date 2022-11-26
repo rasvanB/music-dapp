@@ -1,28 +1,28 @@
-import { parseFile } from "music-metadata";
-import { ZodError } from "zod";
 import { Metadata, metadataObject } from "../models/metadata";
+import { read } from "jsmediatags";
+import { ZodError } from "zod";
 
-const BYTES_TO_MB_RATIO = 2 ** 20;
-const SIZE_LIMIT = 10; // MB
-// calculate bytes to mb conversion
-
-const getMetadata = async (PATH: string): Promise<Metadata> => {
-  try {
-    const metadata = await parseFile(PATH);
-    const data: Metadata = metadataObject.parse(metadata);
-    const sizeInMB =
-      ((data.format.bitrate / 8) * data.format.duration) / BYTES_TO_MB_RATIO;
-    if (sizeInMB <= SIZE_LIMIT) {
-      return data;
-    } else throw new Error("File is too big");
-  } catch (error) {
-    if (error instanceof ZodError) {
-      if (error.issues[0]) {
-        throw new Error(error.issues[0].message);
-      } else throw new Error("Error parsing metadata");
-    }
-    throw error;
-  }
+export const getMetadataFromFile = async (file: File): Promise<Metadata> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error("File read timed out"));
+    }, 4000);
+    read(file, {
+      onSuccess: (tag) => {
+        try {
+          const data: Metadata = metadataObject.parse(tag.tags);
+          resolve(data);
+        } catch (error) {
+          if (error instanceof ZodError && error.issues[0]) {
+            reject(new Error(error.issues[0].message));
+          } else {
+            reject(new Error("Invalid metadata"));
+          }
+        }
+      },
+      onError: (error) => {
+        reject(error);
+      },
+    });
+  });
 };
-
-export default getMetadata;

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { getMetadataFromFile } from "../../../services/files";
+import { getMetadataFromFile } from "../../../utils/getMetadata";
 
 const Upload: NextPage = () => {
   const updateHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -9,6 +9,7 @@ const Upload: NextPage = () => {
         const metadata = await getMetadataFromFile(file);
         console.log(metadata);
       } catch (error) {
+        // TODO: HANDLE TAG READER ERRORS
         console.error(error);
       }
     }
