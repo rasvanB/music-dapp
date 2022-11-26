@@ -2,12 +2,11 @@ import { parseFile } from "music-metadata";
 import { ZodError } from "zod";
 import { Metadata, metadataObject } from "../models/metadata";
 
-const PATH = "C:/Users/fakes/Desktop/test2.mp3";
 const BYTES_TO_MB_RATIO = 2 ** 20;
 const SIZE_LIMIT = 10; // MB
 // calculate bytes to mb conversion
 
-const getMetadata = async (): Promise<Metadata> => {
+const getMetadata = async (PATH: string): Promise<Metadata> => {
   try {
     const metadata = await parseFile(PATH);
     const data: Metadata = metadataObject.parse(metadata);
