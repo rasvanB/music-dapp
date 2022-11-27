@@ -9,7 +9,6 @@ const Upload: NextPage = () => {
         const metadata = await getMetadataFromFile(file);
         console.log(metadata);
       } catch (error) {
-        // TODO: HANDLE TAG READER ERRORS
         console.error(error);
       }
     }
@@ -18,7 +17,8 @@ const Upload: NextPage = () => {
   return (
     <div>
       <h1>Upload</h1>
-      <input type="file" accept=".mp3" onChange={updateHandler} />
+      {/*TODO: JSMEDIATAGS ONLY SUPPORTS MP3, SHOULD ADD SUPPORT FOR FLAC TOO */}
+      <input type="file" accept="audio/mp3" onChange={updateHandler} />
     </div>
   );
 };

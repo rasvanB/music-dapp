@@ -6,10 +6,12 @@ export const getMetadataFromFile = async (file: File): Promise<Metadata> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       reject(new Error("File read timed out"));
-    }, 4000);
+    }, 2000);
     read(file, {
       onSuccess: (tag) => {
         try {
+          console.log(tag);
+
           const data: Metadata = metadataObject.parse(tag.tags);
           resolve(data);
         } catch (error) {
