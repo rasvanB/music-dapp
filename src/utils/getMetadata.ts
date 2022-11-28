@@ -10,8 +10,6 @@ export const getMetadataFromFile = async (file: File): Promise<Metadata> => {
     read(file, {
       onSuccess: (tag) => {
         try {
-          console.log(tag);
-
           const data: Metadata = metadataObject.parse(tag.tags);
           resolve(data);
         } catch (error) {
