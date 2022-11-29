@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { getMetadataFromFile } from "../../../utils/getMetadata";
+import ipfs from "../../../utils/ipfs/client";
 
 const Upload: NextPage = () => {
   const updateHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -7,6 +8,8 @@ const Upload: NextPage = () => {
       const file = e.target.files[0];
       try {
         const metadata = await getMetadataFromFile(file);
+        const result = await ipfs.add(file);
+        console.log(result);
         console.log(metadata);
       } catch (error) {
         console.error(error);
