@@ -9,10 +9,9 @@ const Upload: NextPage = () => {
       try {
         const metadata = await getMetadataFromFile(file);
         const result = await ipfs.add(file);
-        console.log(result);
-        console.log(metadata);
+        // DISPLAY METADATA AND IPFS HASH
       } catch (error) {
-        console.error(error);
+        // ALERT COMPONENT UPDATE HERE
       }
     }
   };
