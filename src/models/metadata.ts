@@ -19,24 +19,6 @@ export const metadataObject = z.object({
     required_error: "Year is required",
     invalid_type_error: "Year must be a string",
   }),
-  TDAT: z.object(
-    {
-      id: z.string(),
-      data: z.string().refine(
-        (data) => {
-          const date = new Date(data);
-          return date instanceof Date && !isNaN(date.getTime());
-        },
-        {
-          message: "Date is invalid",
-        }
-      ),
-    },
-    {
-      required_error: "Date is required",
-      invalid_type_error: "Date must be a string in the format YYYY-MM-DD",
-    }
-  ),
 });
 
 export type Metadata = z.infer<typeof metadataObject>;
