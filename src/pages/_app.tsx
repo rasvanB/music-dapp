@@ -48,13 +48,21 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   const [user, setUser] = useAtom(userAtom);
 
   useEffect(() => {
+    // If there is no user, proceed to retrieve the token from local storage
     if (!user) {
+      // Retrieve the auth:user item from local storage
       const tokenAsJson = window.localStorage.getItem("auth:user");
+
+      // If the item exists, parse it to get the token value
       if (tokenAsJson) {
         const token = JSON.parse(tokenAsJson);
+
+        // If the token value is truthy, set the bearer token and decode the token
         if (token) {
           setBearerToken(token);
           const decodedData = decode(token) as JwtPayload | null;
+
+          // If the decoded data is valid and the token has not expired, get the user data
           if (
             decodedData &&
             decodedData.exp &&
@@ -62,12 +70,18 @@ const MyApp: AppType = ({ Component, pageProps }) => {
             Date.now() < decodedData.exp * 1000
           ) {
             getUserData(decodedData.publicAddress as string).then((user) => {
+              // If the user data is truthy, set the user
               if (user) setUser(user);
             });
-          } else window.localStorage.removeItem("auth:user");
+          }
+          // If the decoded data is invalid or the token has expired, remove the auth:user item from local storage
+          else window.localStorage.removeItem("auth:user");
         }
-      } else setUser(null);
+      }
+      // If the auth:user item does not exist, set the user to null
+      else setUser(null);
     }
+    // Tell React to only run the effect when the component mounts and not re-run it on subsequent updates
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
