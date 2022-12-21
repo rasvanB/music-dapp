@@ -2,12 +2,12 @@ import { NextApiRequest } from "next";
 import * as jwt from "jsonwebtoken";
 import { env } from "../env/server.mjs";
 
-export const getBearerToken = (req: NextApiRequest) => {
+export const getBearerToken = (req: NextApiRequest): string | undefined => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     if (authHeader.startsWith("Bearer ")) {
       const [, token] = authHeader.split(" ");
-      return token;
+      return token as string;
     }
   }
 };
