@@ -16,7 +16,7 @@ export const isJwtValid = (token: string): boolean => {
   try {
     jwt.verify(token, env.SECRET);
     return true;
-  } catch (err) {
+  } catch (_) {
     return false;
   }
 };
