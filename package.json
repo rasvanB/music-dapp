@@ -17,6 +17,8 @@
     "crypto-js": "^4.1.1",
     "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.7.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "hls.js": "^1.2.9",
     "ipfs-http-client": "^59.0.0",
     "jotai": "^1.9.1",
     "jsmediatags": "^3.9.7",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@iconify/react": "^4.0.0",
+    "@types/fluent-ffmpeg": "^2.1.20",
     "@types/jsmediatags": "^3.9.3",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
