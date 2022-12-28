@@ -18,6 +18,7 @@
     "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.7.2",
     "fluent-ffmpeg": "^2.1.2",
+    "formidable": "^2.1.1",
     "hls.js": "^1.2.9",
     "ipfs-http-client": "^59.0.0",
     "jotai": "^1.9.1",
