@@ -10,12 +10,12 @@ export const FormidableError = formidable.errors.FormidableError;
 
 export const parseForm = async (
   req: NextApiRequest
-): Promise<{ fields: formidable.Fields; files: formidable.Files }> => {
+): Promise<{ files: formidable.Files }> => {
   return await new Promise(function (resolve, reject) {
     const form = new formidable.IncomingForm({ keepExtensions: true });
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function (err, _, files) {
       if (err) return reject(err);
-      resolve({ fields, files });
+      resolve({ files });
     });
   });
 };
