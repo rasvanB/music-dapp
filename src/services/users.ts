@@ -13,32 +13,26 @@ export const setBearerToken = (token: string) => {
   bearerToken = token;
 };
 
-export const getUserBasicData = async (
-  address: string
-): Promise<BasicUser | undefined> => {
-  try {
-    const response = await axios
-      .get<BasicUser>("/api/users/" + address)
-      .then((res) => res.data);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+export const getUserBasicData = async (address: string): Promise<BasicUser> => {
+  const response = await axios
+    .get<BasicUser>("/api/users/" + address)
+    .then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
+  return response;
 };
 
-export const getUserData = async (
-  address: string
-): Promise<User | undefined> => {
-  try {
-    const user = await axios
-      .get<User>("/api/users/" + address, {
-        headers: { Authorization: "Bearer " + bearerToken },
-      })
-      .then((res) => res.data);
-    return user;
-  } catch (error) {
-    throw error;
-  }
+export const getUserData = async (address: string): Promise<User> => {
+  const user = await axios
+    .get<User>("/api/users/" + address, {
+      headers: { Authorization: "Bearer " + bearerToken },
+    })
+    .then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
+  return user;
 };
 
 export const createUser = async (user: User): Promise<User | undefined> => {

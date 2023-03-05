@@ -11,20 +11,19 @@ export const FormidableError = formidable.errors.FormidableError;
 export const parseForm = async (
   req: NextApiRequest
 ): Promise<{ files: formidable.Files }> => {
-  return await new Promise(function (resolve, reject) {
+  return await new Promise((resolve, reject) => {
     const form = new formidable.IncomingForm({ keepExtensions: true });
-    form.parse(req, function (err, _, files) {
+    form.parse(req, (err, _, files) => {
       if (err) return reject(err);
       resolve({ files });
     });
   });
 };
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = await parseForm(req);
   console.log(data);
   return res.status(200).json({ data });
-}
+};
+
+export default handle;

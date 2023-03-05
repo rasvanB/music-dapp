@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 import { Metadata } from "../../../models/metadata";
 import { getMetadataFromFile } from "../../../utils/getMetadata";
-import ipfs from "../../../utils/ipfs/client";
+import { uploadFile } from "../../../utils/ipfs/files";
 
 const Upload: NextPage = () => {
   const [metadata, setMetadata] = useState<Metadata>();
@@ -12,8 +12,9 @@ const Upload: NextPage = () => {
       const file = e.target.files[0];
       try {
         const metadata = await getMetadataFromFile(file);
+        const path = await uploadFile(file);
         setMetadata(metadata);
-        await ipfs.add(file);
+        console.log(path);
       } catch (error) {
         console.log(error);
       }
