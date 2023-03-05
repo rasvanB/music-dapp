@@ -1,11 +1,14 @@
+import Result from "../../types/result";
 import ipfs from "./client";
 
-export const uploadFile = async (file: File) => {
+export const uploadFile = async (
+  file: File
+): Promise<Result<string, Error>> => {
   if (file.size > 5 * 1024 * 1024) {
-    throw new Error("File size too large, max 5MB");
+    return { result: "error", error: new Error("File too big, max 5MB") };
   } else {
     const { path } = await ipfs.add(file);
-    return path;
+    return { result: "success", value: path };
   }
 };
 
