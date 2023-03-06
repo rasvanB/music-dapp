@@ -13,9 +13,9 @@ const Upload: NextPage = () => {
       try {
         const metadata = await getMetadataFromFile(file);
         const path = await uploadFile(file);
-        setMetadata(metadata);
-        if (path.result === "success") {
+        if (path.result === "success" && metadata.result === "success") {
           console.log(path.value);
+          console.log(metadata.value);
         }
       } catch (error) {
         console.log(error);
