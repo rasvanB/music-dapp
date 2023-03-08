@@ -2,23 +2,16 @@ import { z } from "zod";
 
 export const maxSeconds = 60 * 30; // 30 minutes
 
+const errorMessages = (field: string) => ({
+  required_error: `${field} is required`,
+  invalid_type_error: `${field} must be a string`,
+});
+
 export const metadataObject = z.object({
-  title: z.string({
-    required_error: "Title is required",
-    invalid_type_error: "Title must be a string",
-  }),
-  artist: z.string({
-    required_error: "Artist is required",
-    invalid_type_error: "Artist must be a string",
-  }),
-  genre: z.string({
-    required_error: "Genre is required",
-    invalid_type_error: "Genre must be a string",
-  }),
-  year: z.string({
-    required_error: "Year is required",
-    invalid_type_error: "Year must be a string",
-  }),
+  title: z.string(errorMessages("Title")),
+  artist: z.string(errorMessages("Artist")),
+  genre: z.string(errorMessages("Genre")),
+  year: z.string(errorMessages("Year")),
 });
 
 export type Metadata = z.infer<typeof metadataObject>;
