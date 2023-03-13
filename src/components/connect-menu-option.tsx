@@ -13,6 +13,7 @@ const ConnectMenuOption = ({
   isLoading,
   onClick,
 }: MenuOptionProps) => {
+  const test = new String("120");
   return (
     <div
       className={clsx(
