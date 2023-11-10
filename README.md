@@ -1,2 +1,2 @@
-### Proiect vechi licenta - Music Dapp 
+### Music Dapp 
 
